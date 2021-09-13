@@ -1,14 +1,22 @@
-using System;
-
+﻿using System;
+using Modul4HW6.DataAccess;
+using Modul4HW6.Services;
+using Modul4HW6.Services.Absractions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 namespace Modul4HW6
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Hello World!");
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<IConfigService, ConfigService>()
+                .AddTransient<Starter>()
+                .BuildServiceProvider();
+
+            var starter = serviceProvider.GetService<Starter>();
+            starter.Run();
         }
     }
 }
